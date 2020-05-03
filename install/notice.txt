@@ -1,0 +1,51 @@
+1.安装python-3.7.0
+    python3.7.0下载地址:
+    https://www.python.org/downloads/release/python-370/
+    安装时勾选配置环境变量
+2.安装chrome，获悉它的版本
+3.从以下网址中找到对应的chromedriver，并在脚本所在目录建一个新文件夹放入
+    https://chromedriver.storage.googleapis.com/index.html
+
+4.在C:/Users/用户名中建立一个pip文件夹，放入pip.ini
+
+5.选中install.py右键默认打开方式为IDLE，然后双击install.py后按F5
+    该步骤为安装支持库
+
+6.将AutoSpread文件夹放在C盘，修改ini.txt
+    一般只需要修改C:\Users后面的用户名
+
+
+
+
+
+
+安装mysql
+安装chrome-80.0.3987.87
+禁用自动更新
+    控制面板 -> 大图标 -> 管理工具 -> 服务 -> Google 更新服务(两个) 右键属性都禁用
+    https://jingyan.baidu.com/article/0aa223754076f788cc0d6492.html
+
+以绝后患
+    新建txt输入几个任意字符，分别另存为GoogleUpdate.exe与GoogleUpdateSetup.exe，并都选择"所有文件"保存形式
+
+    【计算机】->【管理】->【任务计划程序】->【任务计划程序库】
+
+    将“GoogleUpdateTaskMachineCore”、“GoogleUpdateTaskMachineUA”等相关项停止并禁用
+
+    右键-- 属性 -- 操作 找到这两个程序路径，比如C:\Program Files (x86)\Google\Update
+    在这个目录找到GoogleUpdate.exe并替换成之前生成的同名文件，将这个文件进行：
+        右键 -- 属性 -- 安全 -- 编辑 将三个“组或用户”的权限能选中的都选上
+
+    然后在Update中找到像1.3.35.442文件，进入，找到GoogleUpdateSetup.exe这个文件，并用之前的去覆盖
+    然后重复上面的属性修改操作
+
+参考:
+    https://jingyan.baidu.com/article/0eb457e5ecf46f03f1a905b5.html
+    https://www.cnblogs.com/zhouwanqiu/p/9329134.html
+
+如果不小心更新了，只能更新对应的chromedriver
+https://chromedriver.storage.googleapis.com/index.html
+
+
+
+
