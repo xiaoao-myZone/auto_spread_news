@@ -1,0 +1,6 @@
+C:\Users\Administrator\AppData\Local\Google\Chrome\User Data
+C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\Tools\chromedriver_win32\chromedriver.exe
+
+#第一行为谷歌浏览器配置目录
+#第二行为chromedriver.exe的路径
+#gbk编码

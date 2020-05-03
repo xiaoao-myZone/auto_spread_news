@@ -1,0 +1,241 @@
+1558678079414	mozrunner::runner	INFO	Running command: "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\rust_mozprofile.WJgF1pFnVbS0"
+1558678128260	mozrunner::runner	INFO	Running command: "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\rust_mozprofile.xQRFuSPZO6Cy"
+1558678129639	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1558678129640	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1558678129640	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1558678133579	Marionette	INFO	Listening on port 55929
+1558678133798	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 726: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 732: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 733: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 739: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1119: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1149: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1199: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1200: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1219: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1220: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1239: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1240: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 726: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 732: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 733: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 739: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1119: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1149: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1199: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1200: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1219: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1220: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1239: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1240: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://s3.music.126.net/web/s/core_be8e7f9b984b00af671a828b49331395.js?be8e7f9b984b00af671a828b49331395, line 94: unreachable code after return statement
+JavaScript warning: https://s3.music.126.net/web/s/core_be8e7f9b984b00af671a828b49331395.js?be8e7f9b984b00af671a828b49331395, line 133: unreachable code after return statement
+JavaScript warning: https://s3.music.126.net/web/s/pt_musicbox_mailplayer_0f96c7e4a28a6c4a1cfe352760d26e6e.js?0f96c7e4a28a6c4a1cfe352760d26e6e, line 11: unreachable code after return statement
+JavaScript warning: https://s3.music.126.net/web/s/pt_musicbox_mailplayer_0f96c7e4a28a6c4a1cfe352760d26e6e.js?0f96c7e4a28a6c4a1cfe352760d26e6e, line 11: unreachable code after return statement
+[Parent 13904, Gecko_IOThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 11964, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 11964, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Parent 13904, Gecko_IOThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 11948, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Parent 13904, Gecko_IOThread] WARNING: file z:/task_1558035249/build/src/ipc/chromium/src/base/process_util_win.cc, line 160
+1558678229793	Marionette	INFO	Stopped listening on port 55929
+[GPU 14276, Chrome_ChildT
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+1558678241621	mozrunner::runner	INFO	Running command: "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\rust_mozprofile.iArayVeblLpZ"
+1558678243172	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1558678243173	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1558678243173	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1558678246799	Marionette	INFO	Listening on port 56117
+1558678247038	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 726: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 732: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 733: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 739: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1119: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1149: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1199: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1200: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1219: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1220: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1239: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1240: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 726: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 732: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 733: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 739: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1119: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1149: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1199: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1200: SyntaxError: 08 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1219: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1220: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1239: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://mimg.127.net/vip/spread/js/spread.js, line 1240: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://s3.music.126.net/web/s/core_be8e7f9b984b00af671a828b49331395.js?be8e7f9b984b00af671a828b49331395, line 94: unreachable code after return statement
+JavaScript warning: https://s3.music.126.net/web/s/core_be8e7f9b984b00af671a828b49331395.js?be8e7f9b984b00af671a828b49331395, line 133: unreachable code after return statement
+JavaScript warning: https://s3.music.126.net/web/s/pt_musicbox_mailplayer_0f96c7e4a28a6c4a1cfe352760d26e6e.js?0f96c7e4a28a6c4a1cfe352760d26e6e, line 11: unreachable code after return statement
+JavaScript warning: https://s3.music.126.net/web/s/pt_musicbox_mailplayer_0f96c7e4a28a6c4a1cfe352760d26e6e.js?0f96c7e4a28a6c4a1cfe352760d26e6e, line 11: unreachable code after return statement
+[Child 9644, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 9644, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 13784, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 13784, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 12384, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 12384, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+1558678291316	Marionette	INFO	Stopped listening on port 56117
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+[GPU 6344, Chrome_ChildThread] 1558939659445	mozrunner::runner	INFO	Running command: "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\rust_mozprofile.XsBoQbXWw71s"
+1558939661279	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1558939661280	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1558939661281	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1558939665134	Marionette	INFO	Listening on port 49925
+1558939665533	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Parent 13180, Gecko_IOThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Parent 13180, Gecko_IOThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Parent 13180, Gecko_IOThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: http://%(server)s/dummy/blocklist//buckets/monitor/collections/changes/records?_expected=%221558742407364%22 is not a valid URL..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:203:13
+
+[Child 10032, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 10032, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 4488, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 448[Parent 13180, Gecko_IOThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 12836, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1558035249/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+1558942290152	Marionette	INFO	Stopped listening on port 49925
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+[GPU 13256, Chrome_ChildThread] WARNING: pipe error: 109: fi1560582656131	mozrunner::runner	INFO	Running command: "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\rust_mozprofile.MRs5oH18q013"
+1560582656645	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1560582656645	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1560582656646	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1560582658252	Marionette	INFO	Listening on port 59566
+1560582658280	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Parent 420, Gecko_IOThread] WARNING: pipe error: 109: file z:/task_1559936101/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 10504, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1559936101/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 10504, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1559936101/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 2324, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1559936101/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Parent 420, Gecko_IOThread] WARNING: file z:/task_1559936101/build/src/ipc/chromium/src/base/process_util_win.cc, line 160
+[Child 10140, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1559936101/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Parent 420, Gecko_IOThread] WARNING: file z:/task_1559936101/build/src/ipc/chromium/src/base/process_util_win.cc, line 160
+1560582694178	Marionette	INFO	Stopped listening on port 59566
+[GP
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+U 8644, Chrome_ChildThread] WARNIN
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+1560582713145	mozrunner::runner	INFO	Running command: "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\rust_mozprofile.KRB2hSE0p2RT"
+1560582713766	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1560582713767	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1560582713767	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1560582715917	Marionette	INFO	Listening on port 59660
+1560582715954	Marionette	WARN	TLS certificate errors will be ignored for this session
+1560582728557	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728809	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728822	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728830	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728831	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728833	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728833	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728834	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728835	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728836	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728838	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728840	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728841	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728843	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728845	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728847	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728847	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728849	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728849	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728850	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728851	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728852	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728853	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728855	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728855	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728856	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728857	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728859	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728861	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728862	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728863	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728864	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728865	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728866	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582728866	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582729889	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582730142	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582730394	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582730397	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582735507	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582735765	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582736028	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1560582736032	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: http://%(server)s/dummy/blocklist//buckets/monitor/collections/changes/records?_expected=%221560543503257%22 is not a valid URL..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:203:13
+
+[Child 1212, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1559936101/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 11144, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1559936101/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Parent 9020, Gecko_IOThread] WARNING: file z:/task_1559936101/build/src/ipc/chromium/src/base/process_util_win.cc, line 160
+[Child 9552, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1559936101/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 9552, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1559936101/build/src/ipc/chromium/src/chrome/c1560596165747	Marionette	INFO	Stopped listening on port 59660
+[GPU 948, Chrom
