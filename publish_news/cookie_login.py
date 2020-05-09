@@ -74,7 +74,7 @@ publish_list = (
     
     '163',
     'yidianzixun',
-    ##############以上为主要平台################
+    #############以上为主要平台################
     'dayu',
     'ifeng',
     'youcheyihou',
@@ -182,7 +182,7 @@ class Cookie_login():
         #路径
 
 ############################ tools ######################################################### 
-    #tools
+#tools
 
     def _js_click(self,element):
         self.driver.execute_script("arguments[0].click()",element)
@@ -505,10 +505,9 @@ class Cookie_login():
                 print('%s登录信息还有两天内过期\n' %name)
         else:
             print('%s登录信息已过期\n' %name)
-
+#tools
             
-    #tools
-    #collect_info
+#collect_info
 
     def file_name(self,title):#获取简化标题
         if '|' in title:
@@ -1320,8 +1319,8 @@ class Cookie_login():
             imgs_num = len(imgs)
             if imgs_num<3 and again:
                 Winhand().sonic_warn()
-                ans = input('文中图片是否超过3个？回车继续确认，输入字母否定\n')
-                if ans:
+                ans = input('文中图片是否超过2个？回车继续确认，输入字母否定\n')
+                if not ans:
                     imgs_num = 3
                 else:
                     imgs_num = 1
@@ -1460,7 +1459,7 @@ class Cookie_login():
         start = self._wait_for(5,(By.XPATH,'.//div[@class="new-button-wrap"]/button'))
         ActionChains(self.driver).pause(0.3).move_to_element(start).click().perform()
         try:
-            new = self._wait_for_displayed(5,(By.XPATH,'.//*[@class="item_name" and contains(text(),"导入")]'))
+            new = self._wait_for_displayed(5,(By.XPATH,'.//*[contains(@class,"new")]//*[contains(text(),"导入")]'))
             ActionChains(self.driver).pause(0.8).move_to_element(new).click().perform()
         except Exception:
             if again:
@@ -1567,9 +1566,9 @@ class Cookie_login():
                 if strip_name:
                     names.append(strip_name.group())
 
-            self.message['names'] = self._mono_list(names)
-            dealt = set(self.message['bold'] + self.message['heading'] + self.message['extras'])
-            strong_text = list(set(strong_text).difference(dealt))
+        self.message['names'] = self._mono_list(names)
+        dealt = set(self.message['bold'] + self.message['heading'] + self.message['extras'])
+        strong_text = list(set(strong_text).difference(dealt))
         return strong_text
 
     def _get_title_for_tencent(self,content_list,search_range = 5):
@@ -1744,7 +1743,7 @@ class Cookie_login():
         self._detect_table()
 
         #获取图片数量
-
+        #动态加载，不能全部遍历全文
         self.message['imgs_num'],imgs = self._get_imgs_num()
 
         self.message['cover_path'] = self._get_cover(imgs)
@@ -2654,162 +2653,3 @@ class Cookie_login():
 
 
         
-
-
-
-
-#test
-
-
-############################# tools ###########################################################
-
-
-#cookie
-    # def get_cookies(self,web_name):
-    #     cookie = self.driver.get_cookies()
-    #     if cookie:
-    #         jsonCookies = json.dumps(cookie)
-    #         with open(r'cookies\%s.json' % web_name, 'w') as f:
-    #             f.write(jsonCookies)
-    #         return True
-    #     else:
-    #         return False
-    
-    # def refresh_cookie_by_hand(self,cookie_dict,domain):
-    #     cookies = []
-    #     for i in cookie_dict:
-    #         cookie = dict()
-    #         cookie['name'] = i
-    #         cookie['value'] = cookie_dict[i]
-    #         cookie['path']  ='/'
-    #         cookie['domain'] = domain
-    #         cookie['expires'] = None
-    #         cookies.append(cookie)
-    #     for i in cookies:
-    #         if i['domain'].find('.') == 0:
-    #             domain  = i['domain']
-    #             break
-    #     else:
-    #         print("没有以'.'开头的域名。\n")
-
-    #     end = domain.find('.com')
-    #     if end==-1:
-    #         end = domain.find('.net')
-    #         if end == -1:
-    #             print('没有找到域名中的特征字段。\n')
-    #     start = domain.rfind('.',0,end) + 1
-    #     file_name = domain[start:end]
-    #     cookie_list_path = r'C:\Users\Administrator\Desktop\python\习题\项目\cookies\test_2'
-    #     cookie_path  = os.path.join(cookie_list_path,'%s.json' %file_name)
-    #     if os.path.exists(cookie_path):
-    #         ans = input('该cookie--%s.json--会被覆盖，请确定名称是否正确。\n(确认按回车，取消按字母再键回车)\n' %file_name)
-    #         if ans:
-    #             return None
-    #     with open(cookie_path,'w') as f:
-    #         f.write(json.dumps(cookies))
-    #         return True
-        
-    # def login_with_cookies(self,logurl,ready=False):
-    #     web_name = ''
-    #     for cookies in os.listdir('cookies'):
-    #         cookie_name = cookies.split('.')[0]
-    #         print('cookie_name: %s' % cookie_name)
-    #         if cookie_name in logurl:
-    #             web_name = cookie_name
-    #             break
-    #     else:
-    #         print('No cookies for url %s.' % logurl)
-    #     if ready:
-    #         pass
-    #     else:
-    #         self._get_url(logurl)
-    #     #self.open_new_window(logurl)
-    #     cookie = open(r'C:\Users\Administrator\Desktop\python\习题\项目\cookies\%s.json' % web_name,'r').read()
-    #     cookie = json.loads(cookie)
-    #     for c in cookie:
-    #         self.driver.add_cookie(c)
-    #     self.driver.refresh()
-        
-    # def load_cookies(self,cookie_list_path=r'C:\Users\Administrator\Desktop\python\习题\项目\cookies'):
-    #     #注意，加载cookie时需要打开一个具体网页
-    #     for cookie_file in os.listdir(cookie_list_path):
-    #         cookie_path =  os.path.join(cookie_list_path,cookie_file)
-    #         if os.path.isfile(cookie_path):
-    #             print('正在加载 %s ...\n' %cookie_file)
-    #             cookies = json.loads(open(cookie_path,'r').read())
-    #             for c in cookies:
-    #                 self.driver.add_cookie(c)
-    #     print('已加载所有cookies。\n')
-
-    # def load_cookie_by_name(self,cookie_name,cookies_path = r'C:\Users\Administrator\Desktop\python\习题\项目\cookies\test_2'):
-    #     path = os.path.join(cookies_path,'%s.json' %cookie_name)
-    #     if os.path.exists(path):
-    #         cookie = open(path,'r').read()
-    #         cookies = json.loads(cookie)
-    #         if isinstance(cookies,list):
-    #             for c in cookies:
-    #                 self.driver.add_cookie(c)
-    #             if cookie_name=='toutiao':
-    #                 time.sleep(2)
-    #                 login = self._wait_for(5,(By.XPATH,'.//div[@class="standard-content in"]/img[3]'))
-    #                 self.compulsive_click(login)
-
-    #             return True 
-    #         else:
-    #             local_storage = cookies
-    #             for key in local_storage:
-    #                 self.driver.execute_script("window.localStorage.setItem('%s','%s');" %(key, local_storage[key]))
-    #             return True 
-    #     else:
-    #         print('暂无%s的cookie。\n' %cookie)  
-    #         return False
-    
-    # def load_local_storage(self,path = r'C:\Users\Administrator\Desktop\python\习题\项目\cookies\test_2'):
-    #     domain = self.driver.current_url
-    #     name = self.get_keyword_from_domain(domain)
-    #     local_storage = json.loads(open(os.path.join(path,'%s.json' %name),'r').read())
-    #     for key in local_storage:
-    #         self.driver.execute_script("window.localStorage.setItem('%s','%s');" %(key, local_storage[key]))
-            
-    # def get_local_storage(self,path = r'C:\Users\Administrator\Desktop\python\习题\项目\cookies\test_2'):
-    #     domain = self.driver.current_url
-    #     name = self.get_keyword_from_domain(domain)
-    #     local_storage =dict()
-    #     keys = self.driver.execute_script( \
-    #         "var ls = window.localStorage, keys = []; " \
-    #         "for (var i = 0; i < ls.length; ++i) " \
-    #         "  keys[i] = ls.key(i); " \
-    #         "return keys; ")
-    #     for i in keys:
-    #         value = self.driver.execute_script("return localStorage.getItem('%s')" %i)
-    #         local_storage[i]  =value
-    #     local_storage_path = os.path.join(path,'%s.json' %name)
-    #     with open(local_storage_path,'w') as f:
-    #         f.write(json.dumps(local_storage))
-    #     return True
-        
-    # def expiry_of_cookie(self):#返回在半小时后过期的cookie名单
-        # died_cookie = []
-        # live_cookie = []
-        # now = time.time() - 1800
-        # os.chdir(r'C:\Users\Administrator\Desktop\python\习题\项目')
-        # for cookie_json in os.listdir('cookies'):
-        #     cookie_name = cookie_json.split('.')[0]
-        #     cookie = open(r'cookies\%s' % cookie_json,'r').read()
-        #     cookies = json.loads(cookie)
-        #     #print(cookies[0]['domain'],end=':')
-        #     expiries = []
-        #     for c in cookies:
-        #         try:
-        #             temp = c['expiry']
-        #             expiries.append(temp)
-        #         except KeyError:
-        #             pass
-
-        #     expiries.sort()
-        #     if expiries[0] < now:
-        #         died_cookie.append(cookie_name)
-        #     else:
-        #         live_cookie.append(cookie_name)
-        # return [tuple(died_cookie),tuple(live_cookie)]
-#cookie

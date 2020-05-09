@@ -1346,6 +1346,12 @@ class Sina(Web):#搜索  继承头条号的加粗，不继承小标题
     def publish(self):
         button = self.find('.//footer//span[text()="立即发表"]')
         self._js_click(button)
+        try:
+            again = self._wait_for(1.5,(By.XPATH,'.//*[text()="文章检测"]/..//a[text()="直接发表"]'))
+            # self._js_click(again)
+            again.click()
+        except TimeoutException:
+            pass
 
     def _status(self,element):
         status = element.get_attribute('class')
@@ -1617,6 +1623,9 @@ class Sohu(Web):#翻页
 
         #选择相关汽车品牌
         time.sleep(0.5)
+        anchor = self._wait_for_clickable(2,(By.XPATH,'.//div[@class="original-state"]//span[@class="check-box"]'))
+        anchor.location_once_scrolled_into_view
+        self.scroll_to_bottom()
         branches = json.loads(open(self.brand_path).read())
         link_branch = ''
         for b in branches:
@@ -1638,7 +1647,7 @@ class Sohu(Web):#翻页
             self._wait_for_clickable(2,(By.XPATH,'.//div[@class="original-state"]//span[@class="check-box"]')).click()
         
     def publish(self):
-        button = self.find('.//div[@class="right-item"]//span[text()="发布"]')
+        button = self.find('.//*[contains(@class,"item")]//span[text()="发布"]')
         self._js_click(button)
 
     def _status(self,element):
@@ -2287,8 +2296,6 @@ class Ifeng(Web):#已基本完成，测试通过
             except TimeoutException:
                 return
 
-
-
     def select_img(self,cover_num):
         self._wait_masks_invisual()
         add_img_button = self._wait_for(10,(By.XPATH,'.//p[text()="请添加封面"]'))
@@ -2807,8 +2814,15 @@ class Qtt(Web):#搜索
     def publish(self):
         p_button = self.find('.//div[@class="float-right"]//button/span[contains(text(),"发布")]/..')
         self._js_click(p_button)
+
         try:
-            b_1 = self._wait_for_displayed(6,(By.XPATH,'.//div[contains(@class,"dialog-personal-bind")]'))
+            b_0 = self._wait_for_displayed(2,(By.XPATH,'.//div[@aria-label="发布提示"]//button[contains(@class,"primary")]'))
+            time.sleep(0.3)
+            b_0.click()
+        except TimeoutException:
+            pass
+        try:
+            b_1 = self._wait_for_displayed(3,(By.XPATH,'.//div[contains(@class,"dialog-personal-bind")]'))
             b_2 = b_1.find_element_by_xpath('.//input[@value="不再通知"]/..')
             self._js_click(b_2)
             
