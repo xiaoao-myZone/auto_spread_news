@@ -1873,6 +1873,7 @@ class W163(Web):#搜索
         button_1 = self.find('.//div[@class="modal-content"]//button[text()="确定"]')
         self._js_click(button_1)
         self._wait_for_displayed(5,(By.XPATH,'.//div[@class="modal-con"]//div[@class="cropper-wrap-box"]//img[contains(@src,"http")]'))
+        time.sleep(1)
         button_2 = self._wait_for_displayed(3,(By.XPATH,'.//div[@class="modal-con"]//button[text()="确定"]'))
         time.sleep(0.5)
         self._js_click(button_2)
@@ -3260,6 +3261,7 @@ class Ydzx(Web):#搜索
             imgs = img_box.find_elements_by_xpath('.//div[@class="mask"]')
             self._js_click(imgs[0])
             self._select_img(0)
+            time.sleep(2)
             for i in range(1,3):
                 nxt = self._wait_for(4,(By.XPATH,'.//div[@class="cover-item active"]/div'))
                 self._js_click(nxt)
@@ -4131,8 +4133,13 @@ class Tpy(Web):
         tags_ele = self.find('.//div[@class="tags"]')
         tags_name = ['行业分析','新车资讯','汽车科技']#貌似只能选三个
         for i in tags_name:
-            tag = tags_ele.find_element_by_xpath('.//a[text()="%s"]' %i)
-            self._js_click(tag)
+            try:
+                tag = tags_ele.find_element_by_xpath('.//a[text()="%s"]' %i)
+                time.sleep(0.5)
+                self._js_click(tag)
+            except TimeoutException:
+                print('%s在添加标签%s是出现超时\n' %(self.source, i))
+
 
         #设置品牌
         brands = json.loads(open(self.brand_path).read())
@@ -4338,7 +4345,7 @@ class Yiche(Web):
 
     #存在搜索框，但暂时用翻页继续查找文章，翻页上限5次
     def collect_info(self,title,next_page=False,times=5,read_count=False):
-        essay_list = self._wait_for_all(4,(By.XPATH,'.//div[@class="content-manage article"]/ul[@class="image-list"]/li'))
+        essay_list = self._wait_for_all(4,(By.XPATH,'.//ul[@class="image-list"]/li'))
         res = {}
         for i in essay_list:
             title_and_url = i.find_element_by_xpath('.//h5[@class="title"]/a')

@@ -120,7 +120,7 @@ syn_list = ['youcheyihou','qq']
 #可以添加腾讯视频链接的平台
 video_able = ['sohu','','','']
 
-main_webs = ['sohu','toutiao','sina','yidianzixun','yiche']
+main_webs = ['sohu','toutiao','sina','yidianzixun','baidu']
 zero_width_sign = [
     
         r'\t',r'\n',r'\v',r'\f',r'\r',r'\u00a0',r'\u2000',r'\u2001',
@@ -254,6 +254,35 @@ class Cookie_login():
                 handle_dict[unifo_name] = i
         return handle_dict
     
+    def refresh_handle_dict(self):
+        self.handle_dict = self.get_handle_dict()
+        try:
+            str(self.message['source'])
+        except KeyError:
+            ans = int(input('请输入文章来源(输入1表示微信，输入2表示腾讯文档):\n'))
+            if ans==1:
+                self.message['source']='weixin'
+            elif ans==2:
+                self.message['source']='tencent'
+            else:
+                print('输入错误')
+        try:
+            self.switch(self.handle_dict['qq'])
+            url = self.driver.current_url
+            if self.message['source']=='weixin':
+                char = '//mp.weixin.qq.com/'
+            elif self.message['source']=='tencent':
+                char = '//docs.qq.com/'
+            else:
+                print('文章来源不明。\n')
+                return 
+            if char in url:
+                self.main_handle= self.handle_dict['qq']
+            if self.message['model']!='collect':
+                del self.handle_dict['qq']
+        except KeyError:
+            pass
+    
     def get_keyword_from_domain(self,domain):
         end = domain.find('.com')
         if end==-1:
@@ -279,10 +308,10 @@ class Cookie_login():
         js="var q=document.documentElement.scrollTop={}".format(y)
         self.driver.execute_script(js)
 
-    def find(self,locator,method=By.XPATH):
+    def find(self, locator, method=By.XPATH):
         return self.driver.find_element(method,locator)
 
-    def finds(self,locator,method=By.XPATH):
+    def finds(self, locator, method=By.XPATH):
         return self.driver.find_elements(method,locator)
 
     def search_handle_by_title(self,title,switch=True):
@@ -372,25 +401,7 @@ class Cookie_login():
                 time.sleep(10)
                 continue
 
-
-        # return False
-
-        # for i in range(times):
-        #     int(i)
-        #     try:
-        #         if not_first:
-        #             self.driver.refresh()
-        #         else:
-        #             self.driver.get(url)
-        #         return True
-
-        #     except TimeoutException:
-        #         time.sleep(2)
-        #         return self._get_url(url,times-1,not_first=True)
-        # else:
-        #     print('网址:%s \n第%d次加载失败。\n' %(url,i))
-        #     return False
-            
+       
     def delete_info(self,web_element):
         web_element.send_keys(Keys.CONTROL+'a')
         web_element.send_keys(Keys.DELETE)
@@ -956,6 +967,7 @@ class Cookie_login():
     def generate_tags(self):
         file_path = self.content_for_tag_path
         content = open(file_path,'rb').read().decode("gbk", "ignore")
+        content = re.sub('&nbsp;','',content)
         import jieba.analyse
         tags = jieba.analyse.extract_tags(content,topK=5)
         return tags
@@ -1203,6 +1215,15 @@ class Cookie_login():
         else:
             return False
 
+    def mask_additional_element(self):
+        t = self.find('.//*[@id="img-content"]')
+        while t.tag_name !='body':
+            bro = t.find_elements_by_xpath('./../*')
+            bro.remove(t)
+            for i in bro:
+                self.driver.execute_script ("arguments[0].style=arguments[1]",i,"display: none;")
+            t = t.find_element_by_xpath('./..')
+            
     def _select_area(self,execute=True,load=False):#选择复制区域
         if load:
             self._get_imgs_num(load=True)
@@ -1242,6 +1263,7 @@ class Cookie_login():
                     z+=1
                     #self.display_element(i)
 
+            #二维码
             body_displayed_para = self.finds('.//div[@class="qr_code_pc"]')
 
             
@@ -1281,6 +1303,7 @@ class Cookie_login():
             for i in all_invisible_list:
                 self.display_element(i)
 
+            self.mask_additional_element()
             make_sure = self.find('.//p[text()="微信扫一扫"]')
             if make_sure.is_displayed():
                 print('#####文章二维码部分可能没有删除干净。\n')
@@ -2236,24 +2259,7 @@ class Cookie_login():
             plt = datas[i]
             self.webs[i] = map_name_class(i)(self.driver,plt['name'],self.message,plt['account'],plt['code'],current_path)
         
-    def refresh_handle_dict(self):
-        self.handle_dict = self.get_handle_dict()
-        try:
-            self.switch(self.handle_dict['qq'])
-            url = self.driver.current_url
-            if self.message['source']=='weixin':
-                char = '//mp.weixin.qq.com/'
-            elif self.message['source']=='tencent':
-                char = '//docs.qq.com/'
-            else:
-                print('文章来源不明。\n')
-                return 
-            if char in url:
-                self.main_handle= self.handle_dict['qq']
-            if self.message['model']!='collect':
-                del self.handle_dict['qq']
-        except KeyError:
-            pass
+
 
     def check_logged(self,handle_dict=None):
         ready=True
@@ -2566,7 +2572,8 @@ class Cookie_login():
 
         self.switch(self.main_handle)
 
-    def delay_publish(self,times):
+    def delay_publish(self,times=None):
+        "请输入小时"
         if not isinstance(times,(int,float)):
             print('输入q退出')
             while True:
@@ -2578,13 +2585,14 @@ class Cookie_login():
                     if ans=='q' or ans=='Q':
                         return
                     print('输入错误，请重试')
-        delay_stamp = time.time() + times*3600
+        seconds = times*3600
+        delay_stamp = time.time() + seconds
         fmt = '%Y年%m月%d日 %H:%M'
         t = timetransfer(fmt)
         ans = input('文章将在：%s 发布\n回车确认，输入任意字母退出\n' %(t.s2f(delay_stamp)))
         if ans:
             return
-        time.sleep(times*3600)
+        time.sleep(seconds)
         #print('run')
         self.step_p()
 
