@@ -120,7 +120,7 @@ syn_list = ['youcheyihou','qq']
 #可以添加腾讯视频链接的平台
 video_able = ['sohu','','','']
 
-main_webs = ['sohu','toutiao','sina','yidianzixun','baidu']
+main_webs = ['sohu','toutiao','sina','yidianzixun','autohome']
 zero_width_sign = [
     
         r'\t',r'\n',r'\v',r'\f',r'\r',r'\u00a0',r'\u2000',r'\u2001',
@@ -1597,15 +1597,16 @@ class Cookie_login():
     def _get_title_for_tencent(self,content_list,search_range = 5):
         "功能:设置message['raw_title'],并返回"
         count = 0
-
+        # limit = len(content_list)-1
         pattern = re.compile(self.title_pattern)
-        for para in content_list:            
+        for index, para_txt in enumerate(content_list):
+            para =  para_txt.strip()   
             if count==search_range:
                 Winhand().sonic_warn()
                 ans = input('前%d行没有找到标志性标题，是否以第一行非空为标题（回车确认，按任意键退出）\n' %search_range)
                 if ans=='':
                     for para in content_list:
-                        if para:
+                        if para.strip():
                             raw_title = para.strip()
                             self.message['raw_title'] = raw_title
                             return raw_title
@@ -1624,6 +1625,17 @@ class Cookie_login():
                 raw_title = title_and_count[0].strip()
                 title = self._add_forhead(self._reverse_title(raw_title))
                 return title
+                
+        Winhand().sonic_warn()
+        ans = input('前%d行没有找到标志性标题，是否以第一行非空为标题（回车确认，按任意键退出）\n' %search_range)
+        if ans=='':
+            for para in content_list:
+                if para.strip():
+                    raw_title = para.strip()
+                    self.message['raw_title'] = raw_title
+                    return raw_title
+        else:
+            raise Exception
 
     def _get_intro_for_tencent(self,content_list,search_range = 6):
         count = 0
@@ -1635,7 +1647,7 @@ class Cookie_login():
                 self.message['intro_id'] = -1
                 return ''
 
-            if not para:
+            if not para.strip():
                 continue
             title_and_count = pattern.subn('',para,count=1)
             
@@ -1646,6 +1658,10 @@ class Cookie_login():
                 self.message['raw_intro'] = para
                 self.message['intro_id'] = i
                 return title_and_count[0].strip()
+        #
+        self.message['intro_id'] = 1
+        return ''
+
 
     def _get_bold_text_for_tencent(self,paras):#如果作者组有编辑或其他项出现在作者之前，会捕捉不到
         res = []
@@ -1736,6 +1752,7 @@ class Cookie_login():
             return
 
     def _collect_essay_info(self,origin=None,refresh_handle=True):
+        self.message['source']='tencent'
         if refresh_handle:
             self.refresh_handle_dict()
             self.switch(self.main_handle)
@@ -1927,7 +1944,7 @@ class Cookie_login():
         return intro
 
     def _get_title(self):
-        title= re.search(r'''msg_title\s*=\s*('|")(?P<title>.+)('|")''',self.driver.page_source).group('title')
+        title= re.search(r'''msg_title\s*=\s*('|")(?P<title>.+)('|")''',self.driver.page_source).group('title').strip()
         return title
 
     def _save_and_get_cover(self,cover_url=None):

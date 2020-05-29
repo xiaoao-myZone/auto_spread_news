@@ -1457,7 +1457,7 @@ class Sohu(Web):#翻页
         self.paras_tag = 'p'
         self.imgs_tag = 'img'
         self.body = './/div[@id="editor"]/div'   
-        self.title_locator =  (By.XPATH,'.//input[@placeholder="请输入标题"]')
+        self.title_locator =  (By.XPATH,'.//input[contains(@placeholder,"请输入标题")]')
         self.published_signal = 'newsType'
         self.brand_path = os.path.join(current_path,'报告','info','brand-sohu.json')
         self.publish_url = 'https://mp.sohu.com/mpfe/v3/main/news/addarticle?contentStatus=1'
@@ -1623,8 +1623,8 @@ class Sohu(Web):#翻页
 
         #选择相关汽车品牌
         time.sleep(0.5)
-        anchor = self._wait_for_clickable(2,(By.XPATH,'.//div[@class="original-state"]//span[@class="check-box"]'))
-        anchor.location_once_scrolled_into_view
+        # anchor = self._wait_for_clickable(2,(By.XPATH,'.//div[@class="original-state"]//span[@class="check-box"]'))
+        # anchor.location_once_scrolled_into_view
         self.scroll_to_bottom()
         branches = json.loads(open(self.brand_path).read())
         link_branch = ''
@@ -1644,10 +1644,11 @@ class Sohu(Web):#翻页
 
         #原创
         if self.message['original']:
-            self._wait_for_clickable(2,(By.XPATH,'.//div[@class="original-state"]//span[@class="check-box"]')).click()
+            x_path = './/span[contains(text(),"原创声明")]/../*[contains(@class,"check")]'
+            self._wait_for_clickable(2,(By.XPATH,x_path)).click()
         
     def publish(self):
-        button = self.find('.//*[contains(@class,"item")]//span[text()="发布"]')
+        button = self.find('.//*[text()="发布"]')
         self._js_click(button)
 
     def _status(self,element):
@@ -3275,7 +3276,7 @@ class Ydzx(Web):#搜索
             self._select_img(cover_num-1)
 
     def publish(self):
-        self.find('.//div[@class="operation"]/button[text()="发布"]').click()
+        self.find('.//div[contains(@class,"footer")]/*[text()="发布"]').click()
         box = self._wait_for_displayed(4,(By.XPATH,'.//div[@class="dialog warning showDialogBody"]'))
         time.sleep(1)
         box.find_element_by_xpath('.//button[text()="确定"]').click()
