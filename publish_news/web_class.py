@@ -1460,8 +1460,8 @@ class Sohu(Web):#翻页
         self.title_locator =  (By.XPATH,'.//input[contains(@placeholder,"请输入标题")]')
         self.published_signal = 'newsType'
         self.brand_path = os.path.join(current_path,'报告','info','brand-sohu.json')
-        self.publish_url = 'https://mp.sohu.com/mpfe/v3/main/news/addarticle?contentStatus=1'
-    
+        # self.publish_url = 'https://mp.sohu.com/mpfe/v3/main/news/addarticle?contentStatus=1'
+        self.publish_url = 'https://mp.sohu.com/mpfe/v3/main/first/page'
     def login(self,use=None,code=None):
         if use==None:
             use = self.use
@@ -1597,11 +1597,15 @@ class Sohu(Web):#翻页
         if self.message['source']=='weixin' and self.message['2Dcode']:
             Winhand().sonic_warn()
             input('请将第一张图片中的二维码截取再上传到对应位置(回车继续)\n')
+        # Winhand().sonic_warn()
+        # print('请确网页为选中状态\n')
         time.sleep(2)
         #self._hide_notes()
 
     def check_box(self,cover_num=1,again=True):
         #封面
+        anchor = self._wait_for(2,(By.XPATH,'.//*[text()="车型分类"]/..//*[@class="select-main"]/span'))
+        anchor.location_once_scrolled_into_view
         try:
             self.scroll_to_bottom()
             cover = self.find('.//*[contains(@class,"cover")]//*[contains(@class,"upload")]')
@@ -1630,17 +1634,24 @@ class Sohu(Web):#翻页
         link_branch = ''
         for b in branches:
             for tag in self.message['tags']:
-                if b in tag:
+                if tag in b:
                     link_branch = b
                     break
 
         if link_branch:
-            self._wait_for_clickable(2,(By.XPATH,'.//div[@class="plugin-dropdown"]//i[@class="arrow"]')).click()
-            select_branch = self._wait_for_clickable(2,(By.XPATH,'.//ul[@class="drop-menu"]/li[contains(text(),"%s")]' %link_branch))
+            dropout_button = self.find('.//*[text()="车型分类"]/..//*[@class="select-main"]//i')
+            time.sleep(0.6)
+            dropout_button.click()
+            select_branch = self._wait_for_clickable(2,(By.XPATH,'.//div[@class="select-list"]//ul/li[contains(text(),"%s")]' %link_branch))
             select_branch.click()
+            # self._wait_for_clickable(2,(By.XPATH,'.//*[text()="车型分类"]/..//i')).click()
+            # select_branch = self._wait_for_clickable(2,(By.XPATH,'.//ul[@class="drop-menu"]/li[contains(text(),"%s")]' %link_branch))
+            # select_branch.click()
 
         #文章属性
-        self._wait_for_clickable(2,(By.XPATH,'.//div[@class="article-attr"]//div[text()="消息资讯"]')).click()
+        attr_button  = self.find('.//*[contains(text(),"属性")]/..//div[@class="select-main"]')
+        attr_button.click()
+        self._wait_for_clickable(2,(By.XPATH,'.//ul/li[text()="消息资讯"]')).click()
 
         #原创
         if self.message['original']:
@@ -1702,13 +1713,16 @@ class Sohu(Web):#翻页
         dir_path = self.brand_path
 
         self.scroll_to_bottom()
-
-        self._wait_for_clickable(2,(By.XPATH,'.//div[@class="plugin-dropdown"]//i[@class="arrow"]')).click()
-        branch_list_elements = self.finds('.//ul[@class="drop-menu"]/li')
+        input('请将页面滑到底部的“车型分类”，再回车')
+        self._wait_for_clickable(2,(By.XPATH,'.//*[text()="车型分类"]/..//i')).click()
+        branch_list_elements = self._wait_for_all(5,(By.XPATH,'.//div[@class="select-list"]//ul/li'))
+        
         branches = []
 
         for i in branch_list_elements:
-            branches.append(i.text[2:])
+            tag = i.text
+            if tag:
+                branches.append(tag)
 
         if dir_path:
             if not os.path.exists(dir_path):
