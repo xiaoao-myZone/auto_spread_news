@@ -120,7 +120,7 @@ syn_list = ['youcheyihou','qq']
 #可以添加腾讯视频链接的平台
 video_able = ['sohu','','','']
 
-main_webs = ['sohu','toutiao','sina','yidianzixun','autohome']
+main_webs = ['sohu','toutiao','qutoutiao','yidianzixun','autohome']
 zero_width_sign = [
     
         r'\t',r'\n',r'\v',r'\f',r'\r',r'\u00a0',r'\u2000',r'\u2001',
@@ -174,6 +174,9 @@ class Cookie_login():
         self.report_save_path = os.path.join(self.main_path,'报告')
         #self.report_save_path = r'C:\Users\Administrator\Desktop\test\公众号\报告'
         self.report_template_path = os.path.join(self.info_path,'统一模版.xlsx')
+
+        self.five_report_template_path = os.path.join(self.info_path,'五个链接模版.xlsx')
+        
         self.message_cache_path =   os.path.join(self.info_path,'message.json')#用来缓存上一次分析的文章的信息
         self.collect_info     =     os.path.join(self.info_path,'collect_info.json')#用来缓存上次收集到的链接信息
         self.msg_path       =       os.path.join(self.info_path,'msgid.json')
@@ -186,6 +189,9 @@ class Cookie_login():
 
     def _js_click(self,element):
         self.driver.execute_script("arguments[0].click()",element)
+    
+    def _action_click(self, element):
+         ActionChains(self.driver).pause(0.2).move_to_element(element).click(element).perform()
 
     def switch_to_frame(self):
         frame = self._wait_for(4,(By.XPATH,'.//iframe'))
@@ -627,9 +633,16 @@ class Cookie_login():
                 for j in All:
                     print('标题:%s\n链接:%s' %(j[i][0],j[i][1]))
     
-    def _save_in_excel(self,read_count=False):
+    def _save_in_excel(self, temp='all', read_count=False):
         "self.collect_message是一个嵌套字典，外层字典的键是统一的平台名称，值包含各种信息的字典"
-        save_path = self.report_template_path
+        if temp == 'all':
+            save_path = self.report_template_path
+        elif temp == 'five':
+            save_path = self.five_report_template_path
+        else:
+            print('不存在该模版\n')
+            return
+
         main_path = self.report_save_path
         if not self.collect_message:
             try:
@@ -777,6 +790,38 @@ class Cookie_login():
         self._save_message()
 
         self._save_in_excel(read_count=read_count)
+
+    def collect_five_urls_and_save(self, title=None, next_page=False, ready=False):
+        self.message['model'] = 'collect'
+        self.message['collect_message'] = {}
+
+        need_list = main_webs
+
+        if title==None:
+            title = input('请输入标题关键词：(回车退出)\n')
+            if not title:
+                return 
+
+        self.get_webs()
+        if not ready:
+            self.open_webs(need_list,query_url)
+
+        for i in need_list:
+            self.driver.switch_to.window(self.handle_dict[i])
+            try:
+                res = self.webs[i].collect_info(title, read_count=False, next_page=next_page)
+            except TimeoutException:
+                print('%s搜集信息存在超时。' %datas[i]['name'])
+                res = {}
+            except Exception:
+                print('来自"%s"的错误信息:\n' %datas[i]['name'])
+                print(traceback.format_exc())
+                res = {}
+            self.collect_message[i] = res
+
+        self._save_message()
+
+        self._save_in_excel(temp='five')
 
     def get_message(self,normal=True):
         path=self.message_cache_path
@@ -1095,19 +1140,7 @@ class Cookie_login():
             return False
         else:
             return True
-        # else:
-        #     x_margin = cover.size[0] - 560
-        #     y_margin = cover.size[1] - 315
-        #     if -71<x_margin<0 or -51<y_margin<0:
-        #         self.message['cjh_cover_path'] = CompressImage(img_path,500).extendMargin((560,315),'autohome')
-            # else:
-            #     print('#####封面大小不满足要求。')
-            #     if x_margin<0:
-            #         print('宽与标准相差%dpix\n' %x_margin)
-            #     else:
-            #         print('长与标准相差%dpix。\n' %y_margin)
-            #message['change_cover']  = True
-            
+           
     def _check_author_is_too_long(self,author):
         if len(author)<11:
             return author
@@ -1490,8 +1523,7 @@ class Cookie_login():
             else:
                 print('出现错误请重试\n')
                 raise Exception
-
-    
+ 
     def _search_load_essay(self,file_path,main_path):
         if '\\' not in file_path:
             first = []
@@ -1523,15 +1555,15 @@ class Cookie_login():
 
         return file_path
     
-    def _wait_for_uploaded(self):
-        importer = self._wait_for(4,(By.XPATH,'.//div[@class="content-dialog import-file-dialog "]'))
-        while True:
-            try:
-                importer.is_displayed()
-                time.sleep(0.5)
-            except StaleElementReferenceException:
-                print('导入文件成功。\n')
-                break
+    def _wait_for_uploaded(self, wait_time = 30):
+        try:
+            self._wait_for(wait_time, (By.XPATH, './/div[contains(@id, "import")]\
+            //*[@class="progress" and contains(text(), "已完成")]'))
+            self._wait_for(2, (By.XPATH, './/div[contains(@id, "import")]//*[text()="立即打开"]')).click()
+        except TimeoutException:
+            print('载入过程出错，请手动上传后，点开对应的文稿网页，然后关闭上传网页，\
+                最后输入:C._collect_essay_info()')
+            raise Exception
     
     def _get_raw_paras(self):#获取段落的html列表,以&nbsp;</span></div>为标志得到
         
@@ -1553,8 +1585,10 @@ class Cookie_login():
         
         for i in raw_paras:
             fragments =  re.findall(pattern_2,i)
-            s = ''.join(fragments).encode("gbk", 'ignore').decode("gbk", "ignore")#组合并清除零宽字符
+            s = re.sub(r'[\u200b-\u200f\uFEFF\u202a-\u202e]', '' , ''.join(fragments))
+            # s = ''.join(fragments).encode("gbk", 'ignore').decode("gbk", "ignore")#组合并清除零宽字符
             s = re.sub(r'&nbsp;',' ',s)
+            s = re.sub(r'&[\x00-\xff]{2,6};', '', s)
             paras_text.append(s)#paras_text与raw_paras一一对应
         return paras_text
 
@@ -2500,7 +2534,6 @@ class Cookie_login():
         self.modify_content()
         self.check_box()
 
-
     def step_5(self):
         print('发表。')
         self.publish()
@@ -2510,6 +2543,7 @@ class Cookie_login():
 
     def step_p(self):
         self.step_5()
+        time.sleep(2)
         self.step_6()
 
     def steps(self,step=False,cbp=False,skip=False,modify=False):

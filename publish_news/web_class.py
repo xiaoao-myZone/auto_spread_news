@@ -7,7 +7,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException,TimeoutException,\
     ElementClickInterceptedException,StaleElementReferenceException,ElementNotInteractableException,\
-    UnexpectedAlertPresentException
+    UnexpectedAlertPresentException, NoSuchWindowException
 from selenium.webdriver.common.action_chains import ActionChains
 import json,time,os,re,copy,traceback
 import requests,bs4
@@ -129,8 +129,6 @@ class Web():
 
         self.search_button_path = ''#文章搜索确认按钮路径
         
-
-
     ##tools
     def find(self,locator,method=By.XPATH):
         return self.driver.find_element(method,locator)
@@ -151,6 +149,9 @@ class Web():
     def _js_click(self,element):
         time.sleep(0.3)
         self.driver.execute_script("arguments[0].click()",element)
+    
+    def _action_click(self, element):
+         ActionChains(self.driver).pause(0.2).move_to_element(element).click(element).perform()
 
     def focus_on(self,element):
         js = 'arguments[0].focus();'
@@ -555,7 +556,6 @@ class Web():
             res = list(set(cur_handles) - set(pre_handles))[0]
             return res
     
-
     def _paste(self,part,title_path,body_path,method=By.XPATH,text=None):
         if part == 'title':
             title = self._wait_for(4,(method,title_path))
@@ -568,11 +568,11 @@ class Web():
         else:
             print('请输入"title"或者"body"。\n')
 
-    def switch_to_frame(self,locator=None):
+    def switch_to_frame(self,locator=None,wait_time=4):
         if locator:
-            frame = self._wait_for(4,locator)
+            frame = self._wait_for(wait_time,locator)
         else:
-            frame = self._wait_for(4,(By.XPATH,'.//iframe'))
+            frame = self._wait_for(wait_time,(By.XPATH,'.//iframe'))
         self.driver.switch_to.frame(frame)
     
     def _qqlogin(self,qq_href,use,code,):
@@ -980,6 +980,11 @@ class Bjh(Web):#基本完成，基本测试通过
     def publish(self):
         button = self.find('.//span[@class="op-list"]/button/span[text()="发 布"]/..')
         self._js_click(button)
+        try:
+            sure = self._wait_for(1.5,(By.XPATH, './/*[text()="直接发布"]'))
+            self._js_click(sure)
+        except TimeoutException:
+            pass
 
     def _status(self,element):
         return element.find_element_by_xpath('.//span[@class="article-status-desc"]').text
@@ -1458,10 +1463,12 @@ class Sohu(Web):#翻页
         self.imgs_tag = 'img'
         self.body = './/div[@id="editor"]/div'   
         self.title_locator =  (By.XPATH,'.//input[contains(@placeholder,"请输入标题")]')
-        self.published_signal = 'newsType'
+        #作为判断是否发布的特征
+        self.published_signal = 'https://mp.sohu.com/mpfe/v3/main/first/page'
         self.brand_path = os.path.join(current_path,'报告','info','brand-sohu.json')
         self.publish_url = 'https://mp.sohu.com/mpfe/v3/main/news/addarticle?contentStatus=1'
-    
+
+
     def login(self,use=None,code=None):
         if use==None:
             use = self.use
@@ -1597,11 +1604,15 @@ class Sohu(Web):#翻页
         if self.message['source']=='weixin' and self.message['2Dcode']:
             Winhand().sonic_warn()
             input('请将第一张图片中的二维码截取再上传到对应位置(回车继续)\n')
+        # Winhand().sonic_warn()
+        # print('请确网页为选中状态\n')
         time.sleep(2)
         #self._hide_notes()
 
     def check_box(self,cover_num=1,again=True):
         #封面
+        anchor = self._wait_for(2,(By.XPATH,'.//*[text()="车型分类"]/..//*[@class="select-main"]/span'))
+        anchor.location_once_scrolled_into_view
         try:
             self.scroll_to_bottom()
             cover = self.find('.//*[contains(@class,"cover")]//*[contains(@class,"upload")]')
@@ -1630,17 +1641,24 @@ class Sohu(Web):#翻页
         link_branch = ''
         for b in branches:
             for tag in self.message['tags']:
-                if b in tag:
+                if tag in b:
                     link_branch = b
                     break
 
         if link_branch:
-            self._wait_for_clickable(2,(By.XPATH,'.//div[@class="plugin-dropdown"]//i[@class="arrow"]')).click()
-            select_branch = self._wait_for_clickable(2,(By.XPATH,'.//ul[@class="drop-menu"]/li[contains(text(),"%s")]' %link_branch))
+            dropout_button = self.find('.//*[text()="车型分类"]/..//*[@class="select-main"]//i')
+            time.sleep(0.6)
+            dropout_button.click()
+            select_branch = self._wait_for_clickable(2,(By.XPATH,'.//div[@class="select-list"]//ul/li[contains(text(),"%s")]' %link_branch))
             select_branch.click()
+            # self._wait_for_clickable(2,(By.XPATH,'.//*[text()="车型分类"]/..//i')).click()
+            # select_branch = self._wait_for_clickable(2,(By.XPATH,'.//ul[@class="drop-menu"]/li[contains(text(),"%s")]' %link_branch))
+            # select_branch.click()
 
         #文章属性
-        self._wait_for_clickable(2,(By.XPATH,'.//div[@class="article-attr"]//div[text()="消息资讯"]')).click()
+        attr_button  = self.find('.//*[contains(text(),"属性")]/..//div[@class="select-main"]')
+        attr_button.click()
+        self._wait_for_clickable(2,(By.XPATH,'.//ul/li[text()="消息资讯"]')).click()
 
         #原创
         if self.message['original']:
@@ -1702,13 +1720,16 @@ class Sohu(Web):#翻页
         dir_path = self.brand_path
 
         self.scroll_to_bottom()
-
-        self._wait_for_clickable(2,(By.XPATH,'.//div[@class="plugin-dropdown"]//i[@class="arrow"]')).click()
-        branch_list_elements = self.finds('.//ul[@class="drop-menu"]/li')
+        input('请将页面滑到底部的“车型分类”，再回车')
+        self._wait_for_clickable(2,(By.XPATH,'.//*[text()="车型分类"]/..//i')).click()
+        branch_list_elements = self._wait_for_all(5,(By.XPATH,'.//div[@class="select-list"]//ul/li'))
+        
         branches = []
 
         for i in branch_list_elements:
-            branches.append(i.text[2:])
+            tag = i.text
+            if tag:
+                branches.append(tag)
 
         if dir_path:
             if not os.path.exists(dir_path):
@@ -2669,6 +2690,7 @@ class Qtt(Web):#搜索
         self.heading = 'strong'
         self.body = './/body[@class="view"]' 
         self.paras_tag = 'p'
+        self.iframe = (By.XPATH, './/iframe[contains(@id, "edit")]')
         self.title_locator = (By.XPATH,'.//div[@class="el-input"]/input[@placeholder]')
         self.published_signal = 'content-manage'
         self.query_url = 'https://mp.qutoutiao.net/content-manage/article?status=&page=1&title=&submemberid=&nickname=&start_date=&end_date=&isMotherMember=false'
@@ -2721,18 +2743,30 @@ class Qtt(Web):#搜索
         if part == 'title':
             if not self._wait_for_body():
                 return
+
+            #防止重新黏贴标题出错
             try:
                 time.sleep(0.8)
                 exist_title = self.find('.//div[@class="tit-div"]')
                 self._js_click(exist_title)
             except NoSuchElementException:
                 pass
-            self._paste_title()
-            # title = self._wait_for(4,(By.XPATH,'.//div[@class="el-input"]/input[@placeholder]'))
-            # self.delete_info(title)
-            # title.send_keys(self.message['title'])
+
+            for i in range(3):
+                self._paste_title()
+                try:
+                    title_count = self._wait_for(2, (By.XPATH, './/div[contains(@class,"title-counter")]/span')).text
+                    if int(title_count):
+                        break
+                except TimeoutException:
+                    pass
+            else:
+                print('%s的标题未正确设置，请手动添加!\n' % self.source)
+
+
+
         elif part == 'body':
-            self.switch_to_frame()
+            self.switch_to_frame(self.iframe)
             body_locator = (By.XPATH,'%s/p' %self.body)
             self.ctrl_v(body_locator,self.intro)
             self.driver.switch_to.parent_frame()
@@ -2742,8 +2776,17 @@ class Qtt(Web):#搜索
     def modify_content(self):
         "全文0级结构"
         "可以继承头条号的加粗，不能继承h1"
-        self.switch_to_frame()
-        body = self.find(self.body)
+        self.driver.switch_to.parent_frame()
+        for i in range(3):
+            try:
+                self.switch_to_frame(self.iframe,2)
+                body = self.find(self.body)
+            except TimeoutException:
+                self.driver.switch_to.parent_frame()
+        else:
+            print('%s的正文格式修改错误请手动修改!\n' % self.source)
+            return
+
         html = self._get_tag_html(body)
         bold_and_heading = self.message['bold']+self.message['strong']#+self.message['heading']
         for i in bold_and_heading:
@@ -3257,23 +3300,32 @@ class Ydzx(Web):#搜索
         if self.message['imgs_num'] > 2:
             triple = self._wait_for_clickable(4,(By.XPATH,'.//div[@class="article-cover-container"]//span[contains(text(),"三图")]/../i'))
             self._js_click(triple)
-            img_box = self._find_img_box()
 
-            imgs = img_box.find_elements_by_xpath('.//div[@class="mask"]')
-            self._js_click(imgs[0])
-            self._select_img(0)
-            time.sleep(2)
-            for i in range(1,3):
-                nxt = self._wait_for(4,(By.XPATH,'.//div[@class="cover-item active"]/div'))
-                self._js_click(nxt)
-                self._select_img(i)
+            for i in range(3):
+                loaded_imgs = self._wait_for_all(5, (By.XPATH, './/div[@class="album-list"]//img'))
+                if len(loaded_imgs) == 3:
+                    break
+                else:
+                    time.sleep(1)
+
+            else:
+                print('%s的封面未载入完全！' % self.source)
+            # img_box = self._find_img_box()
+
+            # imgs = img_box.find_elements_by_xpath('.//div[@class="mask"]')
+            # self._js_click(imgs[0])
+            # self._select_img(0)
+            # for i in range(1,3):
+            #     nxt = self._wait_for(4,(By.XPATH,'.//div[@class="cover-item active"]/div'))
+            #     self._js_click(nxt)
+            #     self._select_img(i)
         else:
             single = self._wait_for_clickable(4,(By.XPATH,'.//div[@class="article-cover-container"]//span[contains(text(),"单图")]/../i'))
             self._js_click(single)
-            img_box = self._find_img_box()
-            imgs = img_box.find_elements_by_xpath('.//div[@class="mask"]')
-            self._js_click(imgs[0])
-            self._select_img(cover_num-1)
+            # img_box = self._find_img_box()
+            # imgs = img_box.find_elements_by_xpath('.//div[@class="mask"]')
+            # self._js_click(imgs[0])
+            # self._select_img(cover_num-1)
 
     def publish(self):
         self.find('.//div[contains(@class,"footer")]/*[text()="发布"]').click()
@@ -3365,7 +3417,8 @@ class Cjh(Web):#搜索 完全不能继承头条的格式
     
     def _switch_to_publish_page(self,again=True):#转到并黏贴
         time.sleep(1.5)
-        publish = self.find('.//a[contains(@href,"AuthorArticles")]')#'.//div[@class="menuB"]/a[contains(@href,"AuthorArticles")]'
+        # publish = self.find('.//a[contains(@href,"AuthorArticles")]')#'.//div[@class="menuB"]/a[contains(@href,"AuthorArticles")]'
+        publish = self.find('.//a[contains(text(),"发布长文")]')
         self._js_click(publish)
         try:
             self._wait_for(6,(By.XPATH,self.body))
@@ -3397,7 +3450,7 @@ class Cjh(Web):#搜索 完全不能继承头条的格式
             dst = 'https://chejiahao.autohome.com.cn/My'
             current_url = self.driver.current_url
             if current_url==dst:
-                self.refresh()
+                # self.refresh()
                 self._switch_to_publish_page()
             else:
                 if again:
@@ -3834,7 +3887,8 @@ class Zhihu(Web):#发布已测试完成
 
     def get_tags(self):
         button = self.find('.//div[@class="PublishPanel-wrapper"]/button')
-        button.click()
+        self._action_click(button)
+        # button.click()
         tags = []
         tag_element = self.finds('.//div[@class="PublishPanel-popover"]//ul[contains(@class,"tag")]/li')
         for i in tag_element:
@@ -3851,7 +3905,8 @@ class Zhihu(Web):#发布已测试完成
         for i in range(10):
             tag_element = judge(0)
             if tag_element:
-                tag_element.click()
+                self._action_click(tag_element)
+                # tag_element.click()
                 time.sleep(1.2)
             else:
                 break
@@ -3869,10 +3924,12 @@ class Zhihu(Web):#发布已测试完成
             next_step = self._wait_for(2.5,(By.XPATH,\
                 './/div[@class="PublishPanel-popover"]//button[text()="下一步"]'))
             time.sleep(0.8)
-            next_step.click()
+            self._action_click(next_step)
+            # next_step.click()
         except TimeoutException:
             button = self.find('.//div[@class="PublishPanel-wrapper"]/button')
-            self._js_click(button)
+            self._action_click(button)
+            # self._js_click(button)
             if again:
                 return self.publish(again=False)
             else:
@@ -3882,7 +3939,8 @@ class Zhihu(Web):#发布已测试完成
         try:
             skip = self._wait_for(1.5,(By.XPATH,'.//div[@class="Modal-inner"]//button[text()="暂不开通"]'))
             time.sleep(0.8)
-            skip.click()
+            self._action_click(skip)
+            # skip.click()
         except TimeoutException:
             pass
         
@@ -4077,13 +4135,6 @@ class Tpy(Web):
         body = self.find(self.body)
         html = self._get_tag_html(body)
 
-        # bold_text = self.message['bold']
-        # for i in bold_text:
-        #     target = r'<%s>%s(<br>)?</%s>' %(self.paras_tag,self.escape_word(i),self.paras_tag)
-        #     repl = '<%s><%s>%s</%s></%s>'  %(self.paras_tag,self.bold,i,self.bold,self.paras_tag)
-        #     res = re.subn(target,repl,html)
-        #     self._modify_warning(res[1],i)
-        #     html = res[0]
 
         for i in self.message['bold']+self.message['strong']:
             target = r'<%s(?P<id>[^>]*?)>%s(\s)?(<br>)*?</%s>' %(self.paras_tag,self.escape_word(i),self.paras_tag)
@@ -4130,7 +4181,7 @@ class Tpy(Web):
     def check_box(self,again=False):
 
         #设置标签
-        cover_path = self._change_cover_size()#使封面大小不小于900×600
+        cover_path = self._change_cover_size()#使封面大小不小于1280×853
         tags_ele = self.find('.//div[@class="tags"]')
         tags_name = ['行业分析','新车资讯','汽车科技']#貌似只能选三个
         for i in tags_name:
